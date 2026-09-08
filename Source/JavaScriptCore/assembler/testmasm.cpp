@@ -1522,7 +1522,9 @@ void testMultiplyNegZeroExtend32()
         }
     }
 }
+#endif // CPU(ARM64)
 
+#if CPU(X86_64) || CPU(ARM64) || CPU(RISCV64)
 void testExtractUnsignedBitfield32()
 {
     uint32_t src = 0xf0f0f0f0;
@@ -1620,7 +1622,9 @@ void testInsertUnsignedBitfieldInZero64()
         }
     }
 }
+#endif // CPU(X86_64) || CPU(ARM64) || CPU(RISCV64)
 
+#if CPU(ARM64)
 void testInsertBitField32()
 {
     uint32_t src = 0x0f0f0f0f;
@@ -8587,10 +8591,6 @@ void run(const char* filter) WTF_IGNORES_THREAD_SAFETY_ANALYSIS
     RUN(testMultiplyNegSignExtend32());
     RUN(testMultiplyNegZeroExtend32());
 
-    RUN(testExtractUnsignedBitfield32());
-    RUN(testExtractUnsignedBitfield64());
-    RUN(testInsertUnsignedBitfieldInZero32());
-    RUN(testInsertUnsignedBitfieldInZero64());
     RUN(testInsertBitField32());
     RUN(testInsertBitField64());
     RUN(testExtractInsertBitfieldAtLowEnd32());
@@ -8669,6 +8669,11 @@ void run(const char* filter) WTF_IGNORES_THREAD_SAFETY_ANALYSIS
 
 #if CPU(X86_64) || CPU(ARM64) || CPU(RISCV64)
     FOR_EACH_DOUBLE_CONDITION_RUN(testCompareFloat);
+
+    RUN(testExtractUnsignedBitfield32());
+    RUN(testExtractUnsignedBitfield64());
+    RUN(testInsertUnsignedBitfieldInZero32());
+    RUN(testInsertUnsignedBitfieldInZero64());
 #endif
 
 #if CPU(X86_64) || CPU(ARM64) || CPU(RISCV64)
